@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>P1zZA.X1TTERZZ</title>
+
+<style>
+body {
+    background:#0b0b0b;
+    font-family: Arial, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    color:#FF0000;
+}
+
+.box {
+    width:320px;
+    background:#121212;
+    border-radius:10px;
+    padding:15px;
+    box-shadow:0 0 15px #00ffcc;
+}
+
+h2 {
+    text-align:center;
+    color:#00ffcc;
+}
+
+input {
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    background:#1f1f1f;
+    border:none;
+    color:#FF0000;
+    border-radius:5px;
+}
+
+button {
+    width:100%;
+    padding:10px;
+    margin:5px 0;
+    background:#1f1f1f;
+    border:none;
+    color:#fff;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover {
+    background:#00ffcc;
+    color:#FF0000;
+}
+
+.status {
+    text-align:center;
+    margin:10px 0;
+    font-size:13px;
+    color:#FF0000;
+}
+
+.slider {
+    width:100%;
+}
+
+.hidden {
+    display:none;
+}
+
+.hide {
+    background:#ff4444;
+}
+
+.data {
+    background:#0b0b0b;
+    padding:8px;
+    border-radius:5px;
+    font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="box" id="login">
+    <h2>P1ZzA.X1T LOGIN</h2>
+    <input type="password" id="password" placeholder="Digite a senha">
+    <button onclick="checkPass()">Entrar</button>
+</div>
+
+<!-- PANEL -->
+<div class="box hidden" id="panel">
+    <h2>P1ZzA.X1TTERZZ</h2>
+
+    <button onclick="inject()">INJETAR</button>
+    <div class="status" id="status">Aguardando…</div>
+
+    <button onclick="setTarget('Cabeça')">Cabeça</button>
+    <button onclick="setTarget('Pescoço')">Pescoço</button>
+    <button onclick="setTarget('Peito')">Peito</button>
+
+    <label>AIM P0V</label>
+    <input type="range" class="slider" min="0" max="100" id="aim">
+
+    <label>STABILIZz</label>
+    <input type="range" class="slider" min="0" max="100" id="stab">
+
+    <div class="data" id="ffdata"></div>
+
+    <button class="hide" onclick="lockPanel()">Bloquear</button>
+</div>
+
+<script>
+// ===== DATA FREE FIRE (SIMULAÇÃO) =====
+let freeFireData = {
+    player: "PlayerFF",
+    aim: 20,
+    stabilize: 15,
+    target: "Peito",
+    status: "Normal"
+};
+
+// ===== CONFIG SENHA =====
+const SENHA_CORRETA = "V1 05";
+
+// ===== LOGIN =====
+function checkPass() {
+    const pass = document.getElementById("password").value;
+    if (pass === SENHA_CORRETA) {
+        login.classList.add("hidden");
+        panel.classList.remove("hidden");
+        updateData();
+    } else {
+        alert("Senha incorreta!");
+    }
+}
+
+// ===== PANEL =====
+let injecting = false;
+
+function inject() {
+    if (injecting) return;
+    injecting = true;
+
+    freeFireData.aim = aim.value;
+    freeFireData.stabilize = stab.value;
+    freeFireData.status = "FFH4X ATIVO";
+
+    status.innerText = "Aplicando dados...";
+    updateData();
+
+    setTimeout(() => {
+        status.innerText = "Dados aplicados com sucesso";
+        injecting = false;
+    }, 2000);
+}
+
+function setTarget(t) {
+    freeFireData.target = t;
+    updateData();
+}
+
+function updateData() {
+    document.getElementById("ffdata").innerHTML =
+        `<b>DATA FREE FIRE (SIMULADA)</b><br>
+         Player: ${freeFireData.player}<br>
+         Mira: ${freeFireData.aim}<br>
+         Stabilize: ${freeFireData.stabilize}<br>
+         Alvo: ${freeFireData.target}<br>
+         Status: ${freeFireData.status}`;
+}
+
+function lockPanel() {
+    panel.classList.add("hidden");
+    login.classList.remove("hidden");
+    password.value = "";
+}
+</script>
+
+</body>
+</html>
